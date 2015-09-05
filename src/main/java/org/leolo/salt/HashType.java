@@ -7,6 +7,11 @@ public enum HashType {
 	SHA256("s2"),
 	SHA384("s3"),
 	SHA512("s5"),
+	SALTED_MD5("md"),
+	SALTED_SHA1("d1"),
+	SALTED_SHA256("d2"),
+	SALTED_SHA384("d3"),
+	SALTED_SHA512("d5"),
 	HMAC_MD5("mh"),
 	HMAC_SHA1("h1"),
 	HMAC_SHA256("h2"),
@@ -31,5 +36,11 @@ public enum HashType {
 		this.id = id;
 	}
 	
-	
+	public static HashType getType(String id){
+		for(HashType ht:HashType.values()){
+			if(id.equals(ht.id))
+				return ht;
+		}
+		return null;
+	}
 }
