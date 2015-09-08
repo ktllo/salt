@@ -1,6 +1,7 @@
 package org.leolo.salt;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
@@ -46,6 +47,16 @@ public class Salt {
 			hash = new String(Base64.encodeBase64(DigestUtils.sha384(salt+password), false));
 		}else if(type == HashType.SALTED_SHA512){
 			hash = new String(Base64.encodeBase64(DigestUtils.sha512(salt+password), false));
+		}else if(type == HashType.BASE16_MD5){
+			hash = Hex.encodeHexString(DigestUtils.md5(password)).toUpperCase();
+		}else if(type == HashType.BASE16_SHA1){
+			hash = Hex.encodeHexString(DigestUtils.sha1(password)).toUpperCase();
+		}else if(type == HashType.BASE16_SHA256){
+			hash = Hex.encodeHexString(DigestUtils.sha256(password)).toUpperCase();
+		}else if(type == HashType.BASE16_SHA384){
+			hash = Hex.encodeHexString(DigestUtils.sha384(password)).toUpperCase();
+		}else if(type == HashType.BASE16_SHA512){
+			hash = Hex.encodeHexString(DigestUtils.sha512(password)).toUpperCase();
 		}else{
 			hash = HMAC(password,salt,type);
 		}
@@ -104,7 +115,12 @@ public class Salt {
 		String [] part = hash.split("\\$");
 		String algroithm = part[1].trim();
 		String salt = part[2].trim();
-		String newHash = createHash(password,salt,HashType.getType(algroithm));
+		HashType type = HashType.getType(algroithm);
+		String newHash = createHash(password,salt,type);
+		if(type != HashType.BASE16_MD5 || type != HashType.BASE16_SHA1 || type != HashType.BASE16_SHA256 || type != HashType.BASE16_SHA384 || type != HashType.BASE16_SHA512){
+			hash = hash.toUpperCase();
+			newHash = newHash.toUpperCase();
+		}
 		boolean OK = true;
 		for(int i=0;i<newHash.length() && i<hash.length();i++){
 			if( (newHash.charAt(i) ^ hash.charAt(i)) != '\0'){

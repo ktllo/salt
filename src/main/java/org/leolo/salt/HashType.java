@@ -65,7 +65,27 @@ public enum HashType {
 	/**
 	 * Keyed SHA-512 hash.
 	 */
-	HMAC_SHA512("h5");
+	HMAC_SHA512("h5"),
+	/**
+	 * Plain MD5, encoded in Base16
+	 */
+	BASE16_MD5("p0"),
+	/**
+	 * Plain SHA1, encoded in Base16
+	 */
+	BASE16_SHA1("p1"),
+	/**
+	 * Plain SHA256, encoded in Base16
+	 */
+	BASE16_SHA256("p2"),
+	/**
+	 * Plain SHA384, encoded in Base16
+	 */
+	BASE16_SHA384("p3"),
+	/**
+	 * Plain SHA512, encoded in Base16
+	 */
+	BASE16_SHA512("p4");
 	
 	
 	HashType(String id) {
