@@ -20,6 +20,11 @@ public class MainTest {
 				case SHA256:
 				case SHA384:
 				case SHA512:
+				case BASE16_MD5:
+				case BASE16_SHA1:
+				case BASE16_SHA256:
+				case BASE16_SHA384:
+				case BASE16_SHA512:
 					break;
 				default:
 					if(hash1.equals(hash2))
@@ -27,6 +32,7 @@ public class MainTest {
 				}
 			}
 		}catch(Throwable t){
+			t.printStackTrace();
 			fail(t.getMessage());
 		}
 		
@@ -37,6 +43,7 @@ public class MainTest {
 		String password = "password";
 		String guess = "apssword";
 		for(HashType ht:HashType.values()){
+			System.out.println(ht);
 			String hash = Salt.createHash(password,ht);
 			if(!Salt.verify(password, hash))
 				fail("Correct password");
